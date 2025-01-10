@@ -1,5 +1,7 @@
 # Lab 1 - Coursera  
 
+![alt text](image-6.png)  
+
 ## Listing containers 
 
 The ```docker ps``` command lists all running containers and some basic information about them.  
