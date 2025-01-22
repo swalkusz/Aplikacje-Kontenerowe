@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Names App</title>
+    <script>
+        async function fetchNames() {
+            const response = await fetch('http://localhost:5000/names');
+            const names = await response.json();
+            const namesList = document.getElementById('names-list');
+            namesList.innerHTML = '';
+            names.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                namesList.appendChild(li);
+            });
+        }
+
+        async function addName() {
+            const nameInput = document.getElementById('name-input').value;
+            if (!nameInput) {
+                alert('Please enter a name.');
+                return;
+            }
+
+            await fetch('http://localhost:5000/names', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: nameInput })
+            });
+
+            document.getElementById('name-input').value = '';
+            fetchNames();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchNames();
+        });
+    </script>
+</head>
+<body>
+    <h1>Names App</h1>
+    <div>
+        <input type="text" id="name-input" placeholder="Enter a name">
+        <button onclick="addName()">Add Name</button>
+    </div>
+    <h2>Names in Database</h2>
+    <ul id="names-list"></ul>
+</body>
+</html>
